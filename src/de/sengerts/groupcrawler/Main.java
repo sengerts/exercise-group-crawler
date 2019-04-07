@@ -78,10 +78,10 @@ public class Main {
 	}
 	
 	private static String getOutputHTML() {
-		String html = "<html><head><style>.banned { background-color: red; }</style></head>";
+		String html = "<html><head><style>.slot-banned { background-color: red; } .slot-free { background-color: #84F26D; }</style></head>";
 		html += "<body><table border=\"1\"><thead><tr><td>Modulname</td>";
 		for(Appointment timeSlot : getSortedTimeSlots()) {
-			html += (isBanned(timeSlot) ? "<td class='banned'>" + timeSlot.toString() + "</td>" : "<td>" + timeSlot.toString() + "</td>");
+			html += "<td class='slot-" + (isBanned(timeSlot) ? "banned'" : "free") + "'>" + timeSlot.toString() + "</td>";
 		}
 		html += "</tr></thead><tbody>";
 		for(GroupCrawling groupCrawling : groupCrawlings) {
