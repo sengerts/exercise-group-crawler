@@ -20,6 +20,7 @@ import de.sengerts.groupcrawler.weekday.WeekdayNotFoundException;
 
 public class Main {
 	
+	private static final String OUTPUT_HTML_FILE_LOCATION = "D:/OneDrive/Informatik Studium/Semester 2/Uebungsgruppen.html";
 	private static final String MATH2_URL = "https://campus.uni-stuttgart.de/cusonline/wbLv.wbShowLVDetail?pStpSpNr=224994";
 	private static final String THEO2_URL = "https://campus.uni-stuttgart.de/cusonline/wbLv.wbShowLVDetail?pStpSpNr=224044";
 	private static final String DSA_URL = "https://campus.uni-stuttgart.de/cusonline/wbLv.wbShowLVDetail?pStpSpNr=224290&pSpracheNr=1";
@@ -66,7 +67,7 @@ public class Main {
 	
 	private static void generateHTMLOutputFile() {
 		System.out.println("Generating output HTML table..");
-		File file = new File("D:/OneDrive/Informatik Studium/Semester 2/Uebungsgruppen.html");
+		File file = new File(OUTPUT_HTML_FILE_LOCATION);
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			bw.write(getOutputHTML());
