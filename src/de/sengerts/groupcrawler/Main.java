@@ -49,7 +49,7 @@ public class Main {
 		for(String groupsUrl : groupsUrls) {
 			crawlModuleGroups(groupsUrl);
 		}
-		generateHTML();
+		generateHTMLOutputFile();
 	}
 	
 	private static void crawlModuleGroups(final String groupsUrl) {
@@ -64,9 +64,20 @@ public class Main {
 		}
 	}
 	
-	private static void generateHTML() {
+	private static void generateHTMLOutputFile() {
 		System.out.println("Generating output HTML table..");
-		
+		File file = new File("D:/OneDrive/Informatik Studium/Semester 2/Uebungsgruppen.html");
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write(getOutputHTML());
+			bw.close();
+			System.out.println("Done.");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static String getOutputHTML() {
 		String html = "<html><head><style>.banned { background-color: red; }</style></head>";
 		html += "<body><table border=\"1\"><thead><tr><td>Modulname</td>";
 		for(Appointment timeSlot : getSortedTimeSlots()) {
@@ -76,17 +87,7 @@ public class Main {
 		for(GroupCrawling groupCrawling : groupCrawlings) {
 			html += groupCrawling.toHTML();
 		}
-		html += "</tbody></table></body></html>";
-		
-		File file = new File("D:/OneDrive/Informatik Studium/Semester 2/Uebungsgruppen.html");
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-			bw.write(html);
-			bw.close();
-			System.out.println("Done.");
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		return html + "</tbody></table></body></html>";
 	}
 	
 	private static boolean isBanned(final Appointment timeSlot) {
