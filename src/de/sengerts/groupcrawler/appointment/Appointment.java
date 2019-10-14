@@ -10,17 +10,23 @@ public final class Appointment implements Comparable<Appointment> {
 	
 	private final static long DURATION_IN_MINUTES = 90;
 
+	private final String name;
 	private final Weekday weekday;
 	private final LocalTime startTime;
 	private final LocalTime endTime;
 	private final String location;
 
-	public Appointment(final Weekday weekday, final LocalTime startTime, final String location) {
+	public Appointment(final String name, final Weekday weekday, final LocalTime startTime, final String location) {
 		super();
+		this.name = name;
 		this.weekday = weekday;
 		this.startTime = startTime;
 		this.endTime = startTime.plusMinutes(DURATION_IN_MINUTES);
 		this.location = location;
+	}
+	
+	public Appointment(final Weekday weekday, final LocalTime startTime, final String location) {
+		this("", weekday, startTime, location);
 	}
 	
 	/*
@@ -33,7 +39,8 @@ public final class Appointment implements Comparable<Appointment> {
 			return 0;
 		}
 		if(o.getWeekday() != getWeekday()) {
-			return o.getWeekday().ordinal() > getWeekday().ordinal() ? -1 : 1;
+			return Integer.compare(getWeekday().ordinal(), o.getWeekday().ordinal());
+//			return o.getWeekday().ordinal() > getWeekday().ordinal() ? -1 : 1;
 		}
 		return o.getStartTime().isAfter(getStartTime()) ? -1 : 1;
 	}
@@ -91,6 +98,10 @@ public final class Appointment implements Comparable<Appointment> {
 
 	public LocalTime getEndTime() {
 		return endTime;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

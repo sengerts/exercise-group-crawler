@@ -35,6 +35,7 @@ public class GroupCrawling {
 		client.getOptions().setCssEnabled(false);
 		client.getOptions().setJavaScriptEnabled(false);
 		client.getOptions().setUseInsecureSSL(true);
+		client.getOptions().setUseInsecureSSL(true);
 	}
 
 	private final String moduleName;
@@ -45,6 +46,7 @@ public class GroupCrawling {
 	public GroupCrawling(final String groupsUrl)
 			throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		super();
+//		this.groupsUrl = "https://de.4everproxy.com/direct/" + new String(Base64.encodeBase64(groupsUrl.getBytes()));
 		this.groupsUrl = groupsUrl;
 		this.exerciseGroups = new LinkedList<>();
 		this.page = client.getPage(groupsUrl);
@@ -64,7 +66,7 @@ public class GroupCrawling {
 			LocalTime startTime = LocalTime.parse(appointmentInformation.get(2).asText() + ":00");
 			String location = appointmentInformation.get(4).asText();
 
-			ExerciseGroup group = new ExerciseGroup(groupName, new Appointment(weekday, startTime, location));
+			ExerciseGroup group = new ExerciseGroup(moduleName, groupName, new Appointment(weekday, startTime, location));
 			exerciseGroups.add(group);
 		}
 	}
@@ -83,6 +85,7 @@ public class GroupCrawling {
 	public String toHTML() {
 		StringBuilder builder = new StringBuilder("<tr><td>" + moduleName + "</td>");
 		for(Appointment timeSlot : Main.getSortedTimeSlots()) {
+			// Mark lecture slot pink: After td: " + (Main.isBannedByModule(timeSlot, moduleName) ? " class='slot-lecture'" : "") + "
 			builder.append("<td>" + getGroupsFor(timeSlot).stream().map(g -> g.getName()).collect(Collectors.joining(", ")) + "</td>");
 		}
 		builder.append("</tr>");
